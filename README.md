@@ -7,14 +7,13 @@
 - _sqlalchemy_
 - allure
 - config
-### Струткура:
+### Структура:
 - ./test - тесты
 - ./pages - описание страниц
 - ./api - хелперы для работы с API
 - ./db - хелперы для работы с БД
 ### Полезные ссылки
 - [Подсказка по markdown](https://www.markdownguide.org/basic-syntax/)
-### Шаги
 ### Шаги
 1. Склонировать проект 'git clone https://github.com/имя_пользователя/
    pytest_ui_api_template.git'
@@ -27,3 +26,7 @@
 - pip install selenium
 - pip install webdriver-manager
 - pip install allure-pytest
+- pip install requests
+### Инструкция для запуска
+- только api `python3 -m pytest test/test_api.py -s -v`
+- только ui `python3 -m pytest test/test_ui.py -s -v`

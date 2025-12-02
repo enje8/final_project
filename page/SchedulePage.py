@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class SchedulePage:
@@ -85,3 +86,35 @@ class SchedulePage:
           EC.visibility_of_element_located((By.CLASS_NAME, 'popup-header'))))
         sleep(4)
         return self.__driver.find_element(By.CSS_SELECTOR, '.popup-body .description').text
+    
+
+
+    @allure.step("Добавить событие с желтым цветом")
+    def add_event_with_yellow_color(self, name):
+        self.__driver.find_element(By.CLASS_NAME,'add-icon').click()
+        self.__driver.find_element(By.XPATH, "//*[contains(text(), 'Личное событие')]").click()
+        sleep(3)
+        self.__driver.find_element(By.XPATH, "//*[contains(@placeholder, 'посмотреть вебинар')]").send_keys(name)
+
+
+        circles = WebDriverWait(self.__driver, 10).until(
+          EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div.color-circle"))
+        )
+
+        circles[1].click()
+
+        self.__driver.find_element(By.XPATH, "//*[contains(text(), 'Cохранить')]").click()
+
+    @allure.step("Проверка желтого цвета")
+    def get_color(self, name):
+        (WebDriverWait(self.__driver, 10).
+          until(EC.presence_of_element_located((By.XPATH, f"//*[contains(text(), '{name}')]"))))
+        self.__driver.find_element(By.XPATH, f"//*[contains(text(), '{name}')]")
+
+        event_block = self.__driver.find_element(
+    By.XPATH,
+    f"//*[contains(text(), '{name}')]/ancestor::div[contains(@class, 'event-block__container')]"
+)
+        
+        color = event_block.value_of_css_property("border-left-color")
+        return color
