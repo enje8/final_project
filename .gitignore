@@ -306,4 +306,4 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/macos,python,visualstudiocode,test
 
 
-allure-files
+allure-files/
