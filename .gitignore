@@ -267,7 +267,6 @@ pyrightconfig.json
 *testsdir
 *testsfile
 *testsfiles
-*test
 *testdir
 *testfile
 *testfiles
@@ -305,3 +304,6 @@ pyrightconfig.json
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,python,visualstudiocode,test
+
+
+allure-files

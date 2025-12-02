@@ -31,3 +31,6 @@ class AuthPage:
 
     def get_current_url(self):
         return self.__driver.current_url
+    
+
+    

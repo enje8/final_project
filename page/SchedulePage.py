@@ -49,15 +49,39 @@ class SchedulePage:
     
     @allure.step("Удалить событие")
     def delete_event(self):
-        # self.__driver.find_element(By.CLASS_NAME,'add-icon').click()
-        # self.__driver.find_element(By.XPATH, "//*[contains(text(), 'Личное событие')]").click()
-        # self.__driver.find_element(By.XPATH, "//*[contains(@placeholder, 'посмотреть вебинар')]").send_keys(name)
-        # self.__driver.find_element(By.XPATH, "//*[contains(text(), 'Cохранить')]").click()
-        # (WebDriverWait(self.__driver, 10).
-        #   until(EC.presence_of_element_located((By.XPATH, f"//*[contains(text(), '{name}')]"))))
-        # self.__driver.find_element(By.XPATH, f"//*[contains(text(), '{name}')]").click()
         self.__driver.find_element(By.XPATH, "//*[contains(text(), 'Удалить')]").click() 
 
     @allure.step("Удалено событие")
     def element_deleted(self, name):
       (WebDriverWait(self.__driver, 10).until(EC.invisibility_of_element_located((By.XPATH, f"//*[contains(text(), '{name}')]"))))
+
+
+
+    # @allure.step("Добавить описание")
+    # def add_description(self, desc):
+    #     self.__driver.find_element(By.XPATH, "//textarea[contains(@placeholder, 'ссылка на вебинар')]").clear()
+    #     self.__driver.find_element(By.XPATH, "//textarea[contains(@placeholder, 'ссылка на вебинар')]").send_keys(desc)
+    #     self.__driver.find_element(By.XPATH, "//*[contains(text(), 'Cохранить')]").click()
+    #     sleep(1)
+
+
+    @allure.step("Добавить событие с описанием")
+    def add_event_with_description(self, name, description):
+        self.__driver.find_element(By.CLASS_NAME,'add-icon').click()
+        self.__driver.find_element(By.XPATH, "//*[contains(text(), 'Личное событие')]").click()
+        self.__driver.find_element(By.XPATH, "//*[contains(@placeholder, 'посмотреть вебинар')]").send_keys(name)
+        self.__driver.find_element(By.XPATH, "//textarea[contains(@placeholder, 'ссылка на вебинар')]").clear()
+        self.__driver.find_element(By.XPATH, "//textarea[contains(@placeholder, 'ссылка на вебинар')]").send_keys(description)
+        self.__driver.find_element(By.XPATH, "//*[contains(text(), 'Cохранить')]").click()
+        self.__driver.find_element(By.XPATH, "//*[contains(text(), 'Cохранить')]").click()
+
+
+    @allure.step("Получить описание события")
+    def get_description(self, name):
+        (WebDriverWait(self.__driver, 10).
+          until(EC.presence_of_element_located((By.XPATH, f"//*[contains(text(), '{name}')]"))))
+        self.__driver.find_element(By.XPATH, f"//*[contains(text(), '{name}')]").click()
+        (WebDriverWait(self.__driver, 10).until(
+          EC.visibility_of_element_located((By.CLASS_NAME, 'popup-header'))))
+        sleep(4)
+        return self.__driver.find_element(By.CSS_SELECTOR, '.popup-body .description').text
